@@ -26,10 +26,9 @@
         {{ $posts = (first .limit $posts ) }}
     {{ end }}
     {{- range $post := $posts -}}
-        <div>
-            <span class="date-monospace">{{- ($post.Date | time.Format site.Params.theme_config.date_format) }}</span>
-            <a href="{{ $post.Permalink | relURL }}">{{ $post.Title }}</a>
-        </div>
+    <div>
+        <time>{{- ($post.Date | time.Format site.Params.theme_config.date_format) }}</time>&nbsp;&nbsp;<a href="{{ $post.Permalink | relURL }}">{{ $post.Title }}</a>
+    </div>
     {{ end -}}
     {{- if and .show_more $limit_exceeded -}}
         <a href="{{ .show_more_url | relURL }}">{{ .show_more_text | default "Show more..." }}</a>
