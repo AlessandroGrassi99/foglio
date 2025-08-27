@@ -75,7 +75,7 @@ body[a="light"] { @include light-appearance; }
 html { height: 100%; }
 
 body {
-  font-family: monospace;
+  font-family: 'Castoro', monospace;
   font-size: 16px;
   line-height: 1.4;
   margin: 0;
@@ -178,4 +178,8 @@ details[open] summary {
 
 .toc {
   padding: 1rem;
+}
+
+.date-monospace {
+  font-family: monospace;
 }
