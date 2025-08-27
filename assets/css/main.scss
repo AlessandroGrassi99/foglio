@@ -72,7 +72,7 @@ body[a="light"] { @include light-appearance; }
 
 // -------------------------------------------- //
 
-html { height: 100%; }
+body { min-height: 100vh; }
 
 body {
   font-family: 'Castoro', monospace;
@@ -180,6 +180,6 @@ details[open] summary {
   padding: 1rem;
 }
 
-.date-monospace {
+time {
   font-family: monospace;
 }
