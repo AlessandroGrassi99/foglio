@@ -90,8 +90,14 @@ p { margin: 1rem 0; }
 li { margin: 0.4rem 0; }
 
 a {
-  text-decoration: none;
-  &:hover { text-decoration: underline; }
+  color: inherit;
+  text-decoration-thickness: from-font;
+  text-underline-offset: .15em;
+  &:hover{ text-decoration-thickness: .12em; }
+  &:focus-visible{
+    outline: 2px solid currentColor;
+    outline-offset: .15em;
+  }
 }
 
 hr {
@@ -101,6 +107,12 @@ hr {
 
   &:before { content: '/////' }
   &:after { content: attr(data-content) '/////' }
+}
+
+code, pre, kbd, samp{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "JetBrains Mono", "Liberation Mono",
+    "DejaVu Sans Mono", monospace;
+  font-size: .95em;
 }
 
 pre {

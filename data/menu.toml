@@ -1,15 +1,4 @@
 [[entries]]
-title = "info"
-
-  [[entries.entries]]
-  title = "a (nearly) no-CSS, fast, minimalist Hugo theme ported from <a href='https://github.com/riggraz/no-style-please'>riggraz/no-style-please</a>."
-
-  [[entries.entries]]
-  title = "github repo"
-  url = "https://github.com/hanwenguo/hugo-theme-nostyleplease"
-
-
-[[entries]]
 title = "Posts"
 
   [entries.post_list]
@@ -17,9 +6,3 @@ title = "Posts"
   show_more = true
   show_more_text = "See archive..."
   show_more_url = "posts"
-
-[[entries]]
-title = "PRO TIP"
-entries = [
-   { title = "to edit this menu, edit data/menu.toml file" }
-  ]
