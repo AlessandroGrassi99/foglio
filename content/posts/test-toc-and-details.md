@@ -15,7 +15,7 @@ To enable it, all you need to do when creating a new post at the very top is to 
 toc = true
 tocBorder = true
 ```
-You can of course find this post (../themes/nostyleplease/content/posts/test-toc-and-details.md) and open in editor to see how it's working.
+You can of course find this post (`../themes/nostyleplease/content/posts/test-toc-and-details.md`) and open in editor to see how it's working.
 
 ## Details
 ### What it is?
@@ -28,7 +28,7 @@ Well you need to inspect this post and see by yourself. It's very easy. Take loo
 
 ## Styles
 Okey. So if you want to change color-theme you can:
-- go to ../themes/nostyleplease/config.toml and find:
+- go to `../themes/nostyleplease/config.toml` and find:
 
   ```toml
   appearance = "auto"
