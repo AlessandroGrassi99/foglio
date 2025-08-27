@@ -25,15 +25,19 @@
     {{- if .limit }}
         {{ $posts = (first .limit $posts ) }}
     {{ end }}
-    <ul>
-        {{- range $post := $posts -}}
-        <li>
-            <span>{{- ($post.Date | time.Format site.Params.theme_config.date_format) }}</span>
-            <a href="{{ $post.Permalink | relURL }}">{{ $post.Title }}</a>
-        </li>
-        {{ end }}
-        {{- if and .show_more $limit_exceeded }}
-            <li><a href="{{ .show_more_url | relURL }}">{{ .show_more_text | default "Show more..." }}</a></li>
-        {{ end }}
-    </ul>
+    {{- $grouped_posts := $posts.GroupBy "Section" -}}
+    {{- range $group := $grouped_posts -}}
+        {{- if $group.Key -}}
+            <h2>{{ $group.Key }}</h2>
+        {{- end -}}
+        {{- range $post := $group.Pages -}}
+            <div>
+                <span>{{- ($post.Date | time.Format site.Params.theme_config.date_format) }}</span>
+                <a href="{{ $post.Permalink | relURL }}">{{ $post.Title }}</a>
+            </div>
+        {{ end -}}
+    {{- end -}}
+    {{- if and .show_more $limit_exceeded -}}
+        <a href="{{ .show_more_url | relURL }}">{{ .show_more_text | default "Show more..." }}</a>
+    {{- end -}}
 {{ end }}
