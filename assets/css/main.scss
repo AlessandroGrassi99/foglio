@@ -90,7 +90,7 @@ h1,h2,h3,h4{
   font-weight:600;
   line-height:1.2;
   text-wrap: balance;
-  margin-top: var(--space-3);
+  margin-top: var(--space-2);
 }
 h1{ font-size: clamp(1.8rem, calc(1.3rem + 1.8vw), 2.4rem); margin-bottom: var(--space-1); }
 h2{ font-size: clamp(1.3rem, calc(1.05rem + 0.9vw), 1.6rem);  margin-bottom: var(--space-0); }
@@ -141,7 +141,12 @@ summary::-webkit-details-marker{ display:none; }
 
 /* ===== Small niceties ===== */
 .page-content, article{ text-wrap: pretty; hyphens: auto; }
-:where(h1,h2,h3) + p{ margin-top: var(--space-1); }
+:is(h1,h2,h3,h4,h5,h6) + :is(h1,h2,h3,h4,h5,h6){
+  margin-top: var(--space-0);
+}
+:is(h1,h2,h3,h4,h5,h6) + p{
+  margin-top: 0;
+}
 ::selection{ background:#eee; }
 
 /* Quiet meta and footer */
