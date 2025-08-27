@@ -84,7 +84,7 @@ print STDERR join(' ', map {'-' x $_} @max);
 # second pass
 open F, "<$ARGV[0]" or die;
 while(<F>)
-  {
+{
   chomp;
   $i = 0;
   map { printf("%-$max[$_->[1]]s ", $_->[0]) }
