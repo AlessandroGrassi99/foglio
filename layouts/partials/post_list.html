@@ -27,7 +27,7 @@
     {{ end }}
     {{- range $post := $posts -}}
         <div>
-            <span>{{- ($post.Date | time.Format site.Params.theme_config.date_format) }}</span>
+            <span class="date-monospace">{{- ($post.Date | time.Format site.Params.theme_config.date_format) }}</span>
             <a href="{{ $post.Permalink | relURL }}">{{ $post.Title }}</a>
         </div>
     {{ end -}}

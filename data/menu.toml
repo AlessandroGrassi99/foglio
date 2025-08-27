@@ -10,7 +10,7 @@ title = "info"
 
 
 [[entries]]
-title = "all posts"
+title = "Posts"
 
   [entries.post_list]
   limit = 20
