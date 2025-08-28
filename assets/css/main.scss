@@ -96,8 +96,6 @@ h1{ font-size: clamp(1.8rem, calc(1.3rem + 1.8vw), 2.4rem); margin-bottom: var(-
 h2{ font-size: clamp(1.3rem, calc(1.05rem + 0.9vw), 1.6rem);  margin-bottom: var(--space-0); }
 h3{ font-size: clamp(1.1rem, calc(1.0rem + 0.45vw), 1.3rem);  margin-bottom: var(--space-0); }
 
-ul,ol{ padding-left:1.25rem; margin-block: var(--space-0); }
-
 blockquote{
   margin-block: var(--space-2);
   padding-left: 1rem;
@@ -112,6 +110,16 @@ hr{
   margin-block: var(--space-3);
   width:3rem;
 }
+
+/* ===== List spacing ===== */
+ul,ol{ padding-left: 1.25rem; margin-block: var(--space-0); }
+
+/* tighter spacing for nested lists */
+li > ul,
+li > ol{ margin-block: .25rem; }      /* or 0 if you want completely flush */
+
+/* also handle deeper nesting just in case */
+ul ul, ul ol, ol ul, ol ol{ margin-block: .25rem; }
 
 /* ===== Links (monochrome, readable underline) ===== */
 a{
