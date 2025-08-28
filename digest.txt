@@ -1,0 +1,289 @@
+Absolutely—nice, clean theme! I spotted a few small inconsistencies and some polish opportunities. Below are the concrete fixes (with exact files/lines to tweak) that will make Foglio sturdier and more self-consistent.
+
+---
+
+## 1) Minimum Hugo version (modules + Goldmark)
+
+You’re using **Hugo Modules** and **Goldmark** config, which require a newer Hugo than `0.41.0`.
+
+**Fix**
+
+* **theme.toml**
+
+  ```toml
+  ```
+* min\_version = "0.41.0"
+
+- min\_version = "0.60.0"   # Goldmark became default in 0.60; safe floor
+
+  ```
+  ```
+
+* **config.toml**
+
+  ```toml
+  ```
+
+\[module]
+\[module.hugoVersion]
+extended = true
+
+* min      = "0.41.0"
+
+- min      = "0.60.0"
+
+````
+
+---
+
+## 2) Code highlighting: classes vs inline styles
+You set `noClasses = true` but also ship `.chroma` CSS in `main.scss`. Those styles do nothing when `noClasses=true`.
+
+**Pick one** (I recommend classes so you can theme via CSS variables):
+- **config.toml**
+```toml
+[markup.highlight]
+- noClasses = true
++ noClasses = false
+````
+
+(Then your `.chroma` rules will apply as intended.)
+
+---
+
+## 3) Page assets: use `RelPermalink`, not `Permalink | relURL`
+
+Chaining `Permalink | relURL` is brittle. Use `RelPermalink` directly.
+
+**Fix**
+
+* **layouts/partials/head.html**
+
+  ```go
+  ```
+* <link rel="stylesheet" href="{{ $style.Permalink | relURL }}" integrity="{{ $style.Data.Integrity }}" />
+
+- <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" />
+  ```
+
+* **layouts/partials/post\_list.html**
+
+  ```go
+  ```
+* <a href="{{ $post.Permalink | relURL }}">{{ \$post.Title }}</a>
+
+- <a href="{{ $post.RelPermalink }}">{{ \$post.Title }}</a>
+
+  ```
+  ```
+
+---
+
+## 4) Favicon should be optional
+
+Right now you emit a favicon tag even if the param is missing (it becomes `/`).
+
+**Fix**
+
+* **layouts/partials/head.html**
+
+  ```go
+  ```
+* <link rel="shortcut icon" type="image/x-icon" href="{{ $.Site.Params.favicon | relURL }}" />
+
+- {{ with \$.Site.Params.favicon }}
+- <link rel="icon" href="{{ . | relURL }}" />
+- {{ end }}
+
+  ```
+  ```
+
+---
+
+## 5) Meta description logic
+
+Home doesn’t get a description; pages use `.Summary` raw (can break with quotes). Use a safe, short description everywhere.
+
+**Fix**
+
+* **layouts/partials/head.html**
+
+  ```go
+  ```
+* {{ if .IsPage }} <meta name="description" content="{{ .Summary }}">  {{ end }}
+
+- {{ \$desc := cond .IsPage (.Summary | plainify | truncate 160) \$.Site.Params.description }}
+- {{ with \$desc }}<meta name="description" content="{{ . }}">{{ end }}
+
+  ```
+  ```
+
+---
+
+## 6) `custom_js` only loads for posts
+
+README says “per-page JS”, but only `layouts/posts/baseof.html` loads it. That’s surprising for pages.
+
+**Fix (move to default base)**
+Add this right before `</body>` in **layouts/\_default/baseof.html** and **remove it** from `layouts/posts/baseof.html`:
+
+```go
+{{- if .Params.custom_js -}}
+  {{- range .Params.custom_js -}}
+    {{ $js := resources.Get (print "js/" . ".js") }}
+    <script src="{{ $js.RelPermalink }}"></script>
+  {{- end -}}
+{{- end -}}
+```
+
+---
+
+## 7) `menu_item` passes the wrong context to `post_list`
+
+Taxonomy detection in `post_list.html` expects a **Page** in `.context`, but you pass the partial’s dict.
+
+**Fix**
+
+* **layouts/partials/menu\_item.html**
+
+  ```go
+  ```
+* {{ partial "post\_list.html" (dict "context" . "section" \$item.post\_list.section ... ) }}
+
+- {{ partial "post\_list.html" (dict "context" .context "section" \$item.post\_list.section ... ) }}
+
+  ```
+  ```
+
+---
+
+## 8) Sort post lists (explicitly)
+
+`site.RegularPages` ordering can surprise; it’s nicer to be explicit.
+
+**Refine**
+
+* **layouts/partials/post\_list.html**
+
+  ```go
+  ```
+
+{{- /\* after \$posts is computed \*/ -}}
+{{- \$posts = sort \$posts "Date" "desc" -}}
+
+````
+
+---
+
+## 9) Avoid capitalizing post titles
+This will mangle proper nouns and non-English titles.
+
+**Fix**
+- **assets/css/main.scss**
+```css
+-.postlist a{ text-transform: capitalize; }
++/* leave titles as authored */
+````
+
+---
+
+## 10) Dark appearance param currently unused
+
+You set `<body a="auto">` but don’t define dark tokens. Either remove the knob or make it work.
+
+**Add simple dark tokens**
+
+* **assets/css/main.scss** (append)
+
+  ```css
+  ```
+
+html{ color-scheme: light dark; }
+
+/\* Dark tokens when body\[a="dark"] or auto + media \*/
+body\[a="dark"],
+@media (prefers-color-scheme: dark){
+body\[a="auto"]{
+\--bg: #111;
+\--ink: #eee;
+\--ink-muted: #b5b5b5;
+\--rule: #444;
+\--code-bg: #1b1b1b;
+}
+}
+
+````
+
+---
+
+## 11) Safer MathJax helper
+This line is a bug; `classList` is not a string. Use `.add()`.
+
+**Fix**
+- **layouts/partials/mathjax.html**
+```html
+- x.parentElement.classList += 'has-jax'})
++ x.parentElement.classList.add('has-jax')})
+````
+
+---
+
+## 12) Date on generic pages
+
+`_default/single.html` prints a date even for timeless pages. Consider making it conditional.
+
+**Tweak**
+
+* **layouts/\_default/single.html**
+
+  ```go
+  ```
+* <time datetime="{{ .Date }}">{{ .Date | time.Format site.Params.theme\_config.date\_format }}</time>
+
+- {{ with .Date }}
+- <time datetime="{{ . }}">{{ . | time.Format site.Params.theme\_config.date\_format }}</time>
+- {{ end }}
+
+  ```
+  ```
+
+---
+
+## 13) Font stack cleanup (tiny nit)
+
+You’ve duplicated `Georgia, "Times New Roman"`.
+
+**Fix**
+
+* **assets/css/main.scss** (in `body{ font-family: ... }`)
+
+  ```css
+  font-family:
+    "Latin Modern Roman", "CMU Serif",
+  ```
+* Georgia, "Times New Roman",
+* ui-serif, "Iowan Old Style", "Palatino Linotype", "Source Serif 4",
+* "EB Garamond", Georgia, "Times New Roman",
+
+- ui-serif, "Iowan Old Style", "Palatino Linotype", "Source Serif 4",
+- "EB Garamond", Georgia, "Times New Roman",
+  "Noto Serif", "Noto Serif CJK SC", "Songti SC",
+  "Hiragino Mincho ProN", "Yu Mincho", serif;
+
+````
+
+---
+
+## 14) Theme metadata
+You can advertise capabilities via `features` for clarity.
+
+**Nice to have**
+- **theme.toml**
+```toml
+- features = []
++ features = ["scss", "goldmark", "toc", "mathjax", "data-driven menu", "posts list"]
+````
+
+---
+
+If you want, I can generate a small patch set touching just these spots so you can drop it in.

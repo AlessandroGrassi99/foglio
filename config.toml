@@ -1,7 +1,7 @@
 [module]
   [module.hugoVersion]
     extended = true
-    min      = "0.41.0"
+    min      = "0.60.0"
 
 [markup]
   [markup.goldmark]
@@ -20,7 +20,7 @@
     lineNoStart        = 1
     lineNos            = false
     lineNumbersInTable = true
-    noClasses          = true
+    noClasses          = false
     noHl               = false
     style              = 'rrt'
     tabWidth           = 4
