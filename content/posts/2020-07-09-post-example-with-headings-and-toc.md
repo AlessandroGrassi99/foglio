@@ -1,7 +1,7 @@
 ---
 draft: true
-title: "headings and toc"
-date: 2020-07-09T00:00:00+08:00
+title: "Headings and toc"
+date: 2025-08-25T00:00:00+08:00
 ---
 
 Mauris viverra dictum ultricies. Vestibulum quis ipsum euismod, facilisis metus sed, varius ipsum. Donec scelerisque lacus libero, eu dignissim sem venenatis at. Nunc a egestas tortor, sed feugiat leo.

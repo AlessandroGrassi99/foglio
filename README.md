@@ -4,6 +4,11 @@ Foglio (Italian for *sheet of paper*) is a **minimalist, reading‑first** Hugo 
 
 > No visual noise, just words.
 
+## Preview
+![Homepage preview](images/home.png)
+![Post preview](images/post.png)
+
+
 ## Quick start
 
 ```bash
