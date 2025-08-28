@@ -174,6 +174,10 @@ summary::-webkit-details-marker{ display:none; }
   font-variant-numeric: tabular-nums;
 }
 
+.postlist a{
+  text-transform: capitalize;
+}
+
 /* ===== Accessibility ===== */
 .skip-link{ position:absolute; left:-9999px; top:auto; }
 .skip-link:focus{
