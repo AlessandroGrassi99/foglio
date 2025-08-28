@@ -61,14 +61,12 @@ body{
   font-feature-settings: "liga","kern","onum","pnum";
   font-kerning: normal;
   font-variant-numeric: oldstyle-nums proportional-nums;
-  /* robust serif stack; no external font dependency */
   font-family:
     "Latin Modern Roman", "CMU Serif", Georgia, "Times New Roman",
     ui-serif, "Iowan Old Style", "Palatino Linotype", "Source Serif 4",
     "EB Garamond", Georgia, "Times New Roman",
     "Noto Serif", "Noto Serif CJK SC", "Songti SC",
     "Hiragino Mincho ProN", "Yu Mincho", serif;
-  line-height: 1.2;
   font-size: clamp(1rem, calc(0.9rem + 0.5vw), 1.125rem);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -98,7 +96,7 @@ h2{ font-size: clamp(1.3rem, calc(1.05rem + 0.9vw), 1.6rem);  margin-bottom: var
 h3{ font-size: clamp(1.1rem, calc(1.0rem + 0.45vw), 1.3rem);  margin-bottom: var(--space-0); }
 
 blockquote{
-  margin-block: var(--space-2);
+  margin: var(--space-1);
   padding-left: 1rem;
   border-left: 1px solid var(--rule);
   color: var(--ink-muted);
