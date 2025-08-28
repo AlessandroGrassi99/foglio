@@ -194,6 +194,20 @@ summary + *{ margin-top: .35rem; }
 .post-meta, footer, .toc{ color: var(--ink-muted); }
 .toc{ border:1px solid var(--rule); padding: var(--space-1); }
 
+/* ===== TOC: remove extra top/bottom margins and tighten nesting ===== */
+.toc nav#TableOfContents > ul {
+  margin: 0;
+}
+
+.toc nav#TableOfContents ul,
+.toc nav#TableOfContents ol {
+  margin-block: 0;
+}
+
+.toc nav#TableOfContents li {
+  margin: 0;
+}
+
 /* ===== Post list: two-column grid (date + title) ===== */
 .postlist{
   display:grid;
