@@ -142,10 +142,31 @@ pre{ padding: var(--space-1); border:1px solid var(--rule); overflow:auto; }
 figure{ margin-block: var(--space-2); }
 figcaption{ color: var(--ink-muted); font-size:.9em; margin-top:.5rem; }
 
-/* ===== Details/TOC ===== */
+/* ===== Details / disclosure — paper-like underline across chevron + text ===== */
 details{ margin-block: var(--space-1); }
-summary{ cursor:pointer; font-weight:600; list-style:none; }
-summary::-webkit-details-marker{ display:none; }
+
+summary{
+  display: inline;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  text-decoration: none;              /* stop using text-decoration */
+  border-bottom: 1px solid currentColor;   /* continuous underline */
+  padding-bottom: .04em;              /* optical alignment with glyphs */
+}
+summary:hover{ border-bottom-width: 2px; }
+summary:focus-visible{ outline: 2px solid currentColor; outline-offset: .15em; }
+summary::-webkit-details-marker{ display: none; }
+
+summary::before{
+  content: "▸";
+  display: inline;
+  margin-right: .35rem;
+}
+details[open] summary::before{ content: "▾"; }
+
+/* small gap below the summary and the revealed content */
+summary + *{ margin-top: .35rem; }
 
 /* ===== Small niceties ===== */
 .page-content, article{ text-wrap: pretty; hyphens: auto; }
