@@ -30,8 +30,6 @@ hugo --minify
 
 Foglio expects the Latin Modern Roman files at `/fonts/lmroman/` (served at site root). The theme ships the SCSS hooks; you should ship the font files.
 
-**Option A — simplest (recommended):**
-
 Place the webfonts in your **site** at `static/fonts/lmroman/` so they publish to `/fonts/lmroman/`:
 
 ```
@@ -47,10 +45,6 @@ static/
         ├── LMRoman10-BoldItalic.woff2
         └── LMRoman10-BoldItalic.woff
 ```
-
-**Option B — change the paths:**
-
-If you prefer a different location, edit `assets/css/main.scss` `@font-face` URLs to match.
 
 ---
 
