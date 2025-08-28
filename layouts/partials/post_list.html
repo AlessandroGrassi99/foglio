@@ -1,25 +1,18 @@
-{{- $posts := "" -}}
-{{- if .section -}}
-  {{- $posts = (where site.RegularPages "Section" .section) -}}
-{{- else if (eq .context.Kind "taxonomy") -}}
-  {{- $posts = .context.Pages -}}
-{{- else if (eq .context.Kind "term") -}}
-  {{- $posts = .context.Data.Pages -}}
-{{- else -}}
-  {{- $posts = site.RegularPages -}}
-{{- end -}}
+{{- $section := .section | default "posts" -}}
+{{- $posts := where site.RegularPages "Section" $section -}}
+{{- $posts = sort $posts "Date" "desc" -}}
 
 {{- $limit_exceeded := and .limit (gt (len $posts) .limit) -}}
-{{- if .limit }}{{ $posts = (first .limit $posts) }}{{ end }}
+{{- if .limit -}}{{- $posts = first .limit $posts -}}{{- end -}}
 
 {{- if gt (len $posts) 0 -}}
   <div class="postlist">
     {{- range $post := $posts -}}
       <time datetime="{{ $post.Date }}">{{ $post.Date | time.Format site.Params.theme_config.date_format }}</time>
-      <a href="{{ $post.Permalink | relURL }}">{{ $post.Title }}</a>
+      <a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a>
     {{- end -}}
   </div>
   {{- if and .show_more $limit_exceeded -}}
-    <a href="{{ .show_more_url | relURL }}">{{ .show_more_text | default "Show more..." }}</a>
+    <a href="{{ .show_more_url | default "posts" | relURL }}">{{ .show_more_text | default "Show more..." }}</a>
   {{- end -}}
 {{- end -}}

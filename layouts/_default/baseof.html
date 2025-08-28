@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ $.Site.LanguageCode }}">
+<html lang="{{ $.Site.LanguageCode | default "en" }}">
   {{- partial "head.html" . -}}
   <body a="{{ $.Site.Params.theme_config.appearance | default "auto" }}">
     <a class="skip-link" href="#content">Skip to content</a>
@@ -9,5 +9,15 @@
         {{ partial "footer.html" }}
       </div>
     </main>
+  </main>
+
+  {{- if .Params.custom_js -}}
+    {{- range .Params.custom_js -}}
+      {{- $js := resources.Get (print "js/" . ".js") -}}
+      {{- with $js -}}
+        <script src="{{ .RelPermalink }}"></script>
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
   </body>
 </html>

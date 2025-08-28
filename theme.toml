@@ -8,7 +8,7 @@ description = "No visual noise, just words."
 homepage = "https://github.com/AlessandroGrassi99/foglio"
 tags = ["blog", "minimalist", "reading", "latex", "serif"]
 features = []
-min_version = "0.41.0"
+min_version = "0.60.0"
 
 [author]
   name = "Alessandro Grassi"

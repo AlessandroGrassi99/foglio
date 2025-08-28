@@ -1,6 +1,5 @@
 {{ if site.Params.theme_config.isShowFooter }}
-    {{ $footerContent := readFile "layouts/footer.md" }}
-    {{ if and $footerContent (ne $footerContent "") }}
-        {{ $footerContent | markdownify }}
-    {{ end }}
+  {{ with site.GetPage "page" "footer" }}
+    {{ .Content }}
+  {{ end }}
 {{ end }}
