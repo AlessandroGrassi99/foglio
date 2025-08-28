@@ -37,6 +37,7 @@
   --ink: #111;
   --ink-muted: #555;
   --rule: #d9d9d9;
+  --code-bg: #f6f6f6;
 
   --space-0: .5rem;
   --space-1: 1rem;
@@ -136,7 +137,18 @@ code,pre,kbd,samp{
     "Liberation Mono","DejaVu Sans Mono","JetBrains Mono", monospace;
   font-size:.85em;
 }
-pre{ padding: var(--space-1); border:1px solid var(--rule); overflow:auto; }
+code{
+  background: var(--code-bg);
+}
+pre{
+  padding: var(--space-1);
+  overflow: auto;
+  background: var(--code-bg);
+}
+pre code{ background: transparent; }
+
+.chroma,
+.chroma .bg{ background-color: var(--code-bg) !important; }
 
 /* ===== Figures ===== */
 figure{ margin-block: var(--space-2); }
