@@ -1,4 +1,5 @@
 <details {{ if eq (.Get "open" | default "false") "true" }}open{{ end }}>
+    <!-- The space between <summary> and "summary" is necessary -->
     <summary> {{ .Get "summary" | default "Details:" }}</summary>
     {{ .Inner | markdownify }}
 </details>
