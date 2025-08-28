@@ -154,30 +154,32 @@ pre code{ background: transparent; }
 figure{ margin-block: var(--space-2); }
 figcaption{ color: var(--ink-muted); font-size:.9em; margin-top:.5rem; }
 
-/* ===== Details / disclosure — paper-like underline across chevron + text ===== */
+/* Details / disclosure — linky summary with underlined triangle */
 details{ margin-block: var(--space-1); }
 
 summary{
-  display: inline;
+  display: inline;                 /* no box */
   font-weight: 600;
   cursor: pointer;
   list-style: none;
-  text-decoration: none;              /* stop using text-decoration */
-  border-bottom: 1px solid currentColor;   /* continuous underline */
-  padding-bottom: .04em;              /* optical alignment with glyphs */
+  text-decoration-line: underline;
+  text-decoration-thickness: from-font;
+  text-underline-offset: .15em;
+  text-decoration-skip-ink: auto;
 }
-summary:hover{ border-bottom-width: 2px; }
+summary:hover{ text-decoration-thickness: .12em; }
 summary:focus-visible{ outline: 2px solid currentColor; outline-offset: .15em; }
-summary::-webkit-details-marker{ display: none; }
+
+summary::-webkit-details-marker{ display: none; } /* hide default marker */
 
 summary::before{
   content: "▸";
-  display: inline;
-  margin-right: .35rem;
+  display: inline;                 /* <-- was inline-block */
+  text-decoration: inherit;        /* carry the underline to the triangle */
 }
 details[open] summary::before{ content: "▾"; }
 
-/* small gap below the summary and the revealed content */
+/* small gap below the summary line */
 summary + *{ margin-top: .35rem; }
 
 /* ===== Small niceties ===== */
@@ -192,7 +194,7 @@ summary + *{ margin-top: .35rem; }
 
 /* Quiet meta and footer */
 .post-meta, footer, .toc{ color: var(--ink-muted); }
-.toc{ border:1px solid var(--rule); padding:1rem; }
+.toc{ border:1px solid var(--rule); padding: var(--space-1); }
 
 /* ===== Post list: two-column grid (date + title) ===== */
 .postlist{
